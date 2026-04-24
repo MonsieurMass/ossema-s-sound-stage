@@ -176,10 +176,6 @@
     background: hsl(var(--signature) / 0.08);
   }
 
-  .custom-cursor-ring.is-pressed {
-    transform: scale(0.86);
-  }
-
   .custom-cursor-ring.is-text {
     width: 2px;
     height: 28px;
@@ -224,6 +220,12 @@
     width: 1px;
     background: hsl(var(--signature) / 0.24);
     transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.2s var(--ease-editorial);
+  }
+
+  [data-animate].in-view .timeline-spine {
+    transform: scaleY(1);
   }
 
   .timeline-dot {
