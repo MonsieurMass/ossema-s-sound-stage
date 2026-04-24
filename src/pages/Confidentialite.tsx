@@ -39,7 +39,7 @@ const Confidentialite = () => (
         </div>
 
         <div>
-          <h2 className="font-serif-display text-2xl italic mb-4">2. Donnees collecteес</h2>
+          <h2 className="font-serif-display text-2xl italic mb-4">2. Donnees collectees</h2>
           <p>
             Lorsque vous rejoignez le cercle, nous collectons votre adresse email, la preuve de votre consentement,
             la date de souscription et la source de l'inscription.
