@@ -38,6 +38,7 @@ const Index = () => {
       <Streaming />
       <FanList />
       <Footer />
+      <MiniPlayer />
     </main>
   );
 };
