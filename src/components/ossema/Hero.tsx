@@ -13,28 +13,41 @@ const Hero = () => {
   };
 
   return (
-    <section id="top" className="relative min-h-dvh flex flex-col items-center justify-center pt-28 pb-16 px-6 md:px-10">
-      <div className="w-full max-w-6xl grid grid-cols-12 gap-6 md:gap-10 items-end animate-fade-up">
+    <section
+      id="top"
+      className="relative min-h-dvh flex flex-col justify-center pt-24 pb-20 px-6 md:px-10 overflow-hidden"
+    >
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-12 gap-6 md:gap-10 items-center animate-fade-up">
+        {/* Texte */}
         <div className="col-span-12 lg:col-span-7 order-2 lg:order-1">
-          <p className="caption opacity-60 mb-6">Kymia Music — Signature 001</p>
-          <h1 className="font-serif-display text-[22vw] sm:text-[18vw] lg:text-[12vw] leading-[0.82] tracking-tighter mb-6">
+          <p className="caption opacity-60 mb-5">
+            Kymia Music · <span className="text-signature">Signature 001</span>
+          </p>
+
+          {/* Titre artiste : tailles raisonnables, sans débordement */}
+          <h1 className="font-serif-display text-[18vw] sm:text-[14vw] lg:text-[10rem] xl:text-[12rem] leading-[0.85] tracking-tighter mb-6 break-words">
             {ossema.artist}
           </h1>
-          <div className="flex items-baseline gap-4 flex-wrap mb-10">
+
+          <div className="flex items-baseline gap-3 flex-wrap mb-8">
             <span className="caption opacity-60">Nouveau Single</span>
-            <span className="font-serif-display italic text-2xl md:text-3xl">
+            <span className="font-serif-display italic text-xl sm:text-2xl md:text-3xl">
               {ossema.release.title}
             </span>
             <span className="caption opacity-40">— {ossema.release.album}</span>
           </div>
 
-          {/* CTAs */}
+          {/* CTAs : action principale = signature rouge */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <button
               onClick={handleListenNow}
-              className="silver-border bg-ink text-vellum px-8 py-4 caption font-bold flex items-center justify-center gap-3 hover:bg-foreground/90 transition-colors group"
+              className="bg-signature text-vellum px-8 py-4 caption font-bold flex items-center justify-center gap-3 hover:bg-signature-glow transition-colors group"
             >
-              <Play size={14} fill="currentColor" className="transition-transform group-hover:scale-110" />
+              <Play
+                size={14}
+                fill="currentColor"
+                className="transition-transform group-hover:scale-110"
+              />
               Écouter maintenant
             </button>
             <a
@@ -43,15 +56,22 @@ const Hero = () => {
               rel="noopener noreferrer"
               className="silver-border bg-transparent text-ink px-8 py-4 caption font-bold flex items-center justify-center gap-3 hover:bg-ink hover:text-vellum transition-colors group"
             >
-              <Bookmark size={14} className="transition-transform group-hover:scale-110" />
+              <Bookmark
+                size={14}
+                className="transition-transform group-hover:scale-110"
+              />
               Pré-save
             </a>
           </div>
-          <p className="caption opacity-40 mt-4">{ossema.release.releaseDate}</p>
+          <p className="caption opacity-40 mt-5">
+            <span className="inline-block size-1.5 bg-signature rounded-full mr-2 align-middle animate-pulse" />
+            {ossema.release.releaseDate}
+          </p>
         </div>
 
+        {/* Portrait */}
         <div className="col-span-12 lg:col-span-5 order-1 lg:order-2">
-          <div className="aspect-[3/4] overflow-hidden silver-border bg-muted">
+          <div className="aspect-[3/4] overflow-hidden silver-border bg-muted relative">
             <img
               src={ossema.release.portrait}
               alt={`${ossema.artist}, portrait éditorial`}
@@ -59,11 +79,16 @@ const Hero = () => {
               width={1024}
               height={1408}
             />
+            <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-ink/80 to-transparent">
+              <p className="caption text-vellum opacity-80">
+                Ossema · Paris · 2026
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 caption opacity-40 animate-drift">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 caption opacity-40 animate-drift">
         Faire défiler ↓
       </div>
     </section>

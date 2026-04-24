@@ -28,6 +28,8 @@ export default {
         silver: "hsl(var(--silver))",
         "silver-foil": "hsl(var(--silver-foil))",
         whisper: "hsl(var(--whisper))",
+        signature: "hsl(var(--signature))",
+        "signature-glow": "hsl(var(--signature-glow))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
