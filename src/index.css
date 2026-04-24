@@ -66,6 +66,16 @@
       hsl(0 0% 100%) 50%,
       hsl(0 0% 64%) 100%);
 
+    /* Nuit gradient — pour sections sombres */
+    --gradient-night: linear-gradient(180deg,
+      hsl(var(--midnight)) 0%,
+      hsl(var(--midnight-deep)) 100%);
+
+    /* Lueur rouge nocturne */
+    --gradient-blood: radial-gradient(circle at 50% 0%,
+      hsl(var(--signature) / 0.35) 0%,
+      transparent 60%);
+
     /* Long, smooth editorial transitions */
     --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
     --transition-slow: 700ms var(--ease-editorial);
