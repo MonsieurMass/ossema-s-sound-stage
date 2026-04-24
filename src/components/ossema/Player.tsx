@@ -121,6 +121,11 @@ const Player = () => {
                 </span>
               </div>
             </div>
+
+            {/* Visualizer */}
+            <div className="mt-1 opacity-90">
+              <AudioVisualizer height={48} />
+            </div>
           </div>
         </div>
       </div>
