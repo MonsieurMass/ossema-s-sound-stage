@@ -8,7 +8,7 @@ export const ossema = {
   artist: "OSSEMA",
   label: "Kymia Music",
   release: {
-    title: "L'Hiver en Mai",
+    title: "La Nuit",
     track: "01",
     album: "Noir Vif",
     duration: 222, // seconds (3:42)
