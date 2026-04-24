@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="night" x1="600" y1="0" x2="600" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10182C"/>
+      <stop offset="1" stop-color="#070B15"/>
+    </linearGradient>
+    <radialGradient id="blood" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 80) rotate(90) scale(280 520)">
+      <stop stop-color="#BC2121" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#BC2121" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#night)"/>
+  <rect width="1200" height="630" fill="url(#blood)"/>
+  <rect x="48" y="48" width="1104" height="534" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <text x="96" y="132" fill="#D2D7E2" font-family="Georgia, serif" font-size="28" letter-spacing="8">KYMIA MUSIC</text>
+  <text x="96" y="330" fill="#F8F7F1" font-family="Georgia, serif" font-size="148" font-style="italic">OSSEMA</text>
+  <text x="96" y="422" fill="#F8F7F1" font-family="Georgia, serif" font-size="62" font-style="italic">La Nuit</text>
+  <text x="96" y="496" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">LANDING DE SORTIE · PLAYER · PAROLES · FAN LIST</text>
+</svg>
