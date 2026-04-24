@@ -1,7 +1,6 @@
-import { ossema } from "@/data/ossema";
+import { ossema, getAvailableStreamingLinks, isReleaseOut, isUrlReady } from "@/data/ossema";
 import { ArrowUpRight } from "lucide-react";
 
-// Logos SVG inline officiels (formes simplifiées, monochromes pour s'adapter au design)
 const Logos: Record<string, JSX.Element> = {
   Spotify: (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -25,53 +24,77 @@ const Logos: Record<string, JSX.Element> = {
   ),
 };
 
-const Streaming = () => (
-  <section className="bg-secondary/40 border-y border-border">
-    <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
-      <div className="flex justify-between items-end mb-10">
-        <div>
-          <p className="caption opacity-50 mb-2">
-            <span className="text-signature">Écouter</span> sur
-          </p>
-          <h2 className="font-serif-display text-3xl md:text-4xl tracking-tight">
-            Toutes les plateformes
-          </h2>
-        </div>
-        <p className="caption opacity-30 hidden sm:block">Sortie partout</p>
-      </div>
+const Streaming = () => {
+  const released = isReleaseOut();
+  const availablePlatforms = getAvailableStreamingLinks();
+  const cards = availablePlatforms.length > 0 ? availablePlatforms : ossema.streaming;
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        {ossema.streaming.map((p) => (
-          <a
-            key={p.name}
-            href={p.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group bg-vellum border border-border p-5 md:p-6 flex flex-col gap-4 hover:border-signature hover:bg-signature hover:text-vellum transition-all duration-300"
-            aria-label={`Écouter ${ossema.release.title} sur ${p.name}`}
-          >
-            <div className="flex items-start justify-between">
-              <div className="size-8 md:size-10 text-ink group-hover:text-vellum transition-colors">
-                {Logos[p.name]}
+  return (
+    <section id="plateformes" className="bg-secondary/40 border-y border-border">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
+        <div className="flex justify-between items-end mb-10 gap-6">
+          <div>
+            <p className="caption opacity-50 mb-2">
+              <span className="text-signature">Écouter</span> sur
+            </p>
+            <h2 className="font-serif-display text-3xl md:text-4xl tracking-tight">
+              Toutes les plateformes
+            </h2>
+          </div>
+          <p className="caption opacity-30 hidden sm:block">
+            {released ? "Sortie partout" : "Activation progressive des liens"}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          {cards.map((platform) => {
+            const ready = released && isUrlReady(platform.url);
+            const cardClass = ready
+              ? "group bg-vellum border border-border p-5 md:p-6 flex flex-col gap-4 hover:border-signature hover:bg-signature hover:text-vellum transition-all duration-300"
+              : "bg-vellum/60 border border-border p-5 md:p-6 flex flex-col gap-4 opacity-70";
+
+            return ready ? (
+              <a
+                key={platform.name}
+                href={platform.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cardClass}
+                aria-label={`Écouter ${ossema.release.title} sur ${platform.name}`}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="size-8 md:size-10 text-ink group-hover:text-vellum transition-colors">
+                    {Logos[platform.name]}
+                  </div>
+                  <ArrowUpRight
+                    size={18}
+                    className="opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+                  />
+                </div>
+                <div>
+                  <p className="caption opacity-50 group-hover:opacity-70 transition-opacity">
+                    {platform.code}
+                  </p>
+                  <p className="font-serif-display text-lg md:text-xl mt-1">{platform.name}</p>
+                </div>
+              </a>
+            ) : (
+              <div key={platform.name} className={cardClass} aria-disabled="true">
+                <div className="flex items-start justify-between">
+                  <div className="size-8 md:size-10 text-ink/70">{Logos[platform.name]}</div>
+                  <span className="caption opacity-40">bientôt</span>
+                </div>
+                <div>
+                  <p className="caption opacity-50">{platform.code}</p>
+                  <p className="font-serif-display text-lg md:text-xl mt-1">{platform.name}</p>
+                </div>
               </div>
-              <ArrowUpRight
-                size={18}
-                className="opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
-              />
-            </div>
-            <div>
-              <p className="caption opacity-50 group-hover:opacity-70 transition-opacity">
-                {p.code}
-              </p>
-              <p className="font-serif-display text-lg md:text-xl mt-1">
-                {p.name}
-              </p>
-            </div>
-          </a>
-        ))}
+            );
+          })}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Streaming;
