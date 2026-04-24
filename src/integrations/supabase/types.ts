@@ -14,7 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      fan_subscribers: {
+        Row: {
+          artist: string
+          created_at: string
+          email: string
+          id: string
+          source: string | null
+        }
+        Insert: {
+          artist?: string
+          created_at?: string
+          email: string
+          id?: string
+          source?: string | null
+        }
+        Update: {
+          artist?: string
+          created_at?: string
+          email?: string
+          id?: string
+          source?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
