@@ -3,6 +3,7 @@ import Hero from "@/components/ossema/Hero";
 import Player from "@/components/ossema/Player";
 import MiniPlayer from "@/components/ossema/MiniPlayer";
 import Lyrics from "@/components/ossema/Lyrics";
+import Artist from "@/components/ossema/Artist";
 import VideoSection from "@/components/ossema/VideoSection";
 import PreSave from "@/components/ossema/PreSave";
 import Streaming from "@/components/ossema/Streaming";
@@ -33,6 +34,7 @@ const Index = () => {
       <Hero />
       <Player />
       <Lyrics currentTime={currentTime} />
+      <Artist />
       <VideoSection />
       <PreSave />
       <Streaming />
