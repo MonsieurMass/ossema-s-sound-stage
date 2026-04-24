@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AudioProvider } from "@/audio/AudioProvider";
+import ExperienceEnhancements from "@/components/experience/ExperienceEnhancements";
 import Index from "./pages/Index.tsx";
 import Merci from "./pages/Merci.tsx";
 import Confidentialite from "./pages/Confidentialite.tsx";
@@ -19,6 +20,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AudioProvider>
+          <ExperienceEnhancements />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/merci" element={<Merci />} />
