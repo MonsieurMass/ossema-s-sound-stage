@@ -11,6 +11,8 @@ interface AudioCtx {
   pause: () => void;
   seek: (t: number) => void;
   hasSource: boolean;
+  /** Renvoie un tableau Uint8Array (frequencyBinCount) pour visualizer, ou null si non prêt */
+  getFrequencyData: () => Uint8Array | null;
 }
 
 const Ctx = createContext<AudioCtx | null>(null);
@@ -21,14 +23,43 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(ossema.release.duration);
 
+  // Web Audio API — visualizer
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const dataArrayRef = useRef<Uint8Array | null>(null);
+
   const hasSource = Boolean(ossema.release.audioUrl);
+
+  const initAudioGraph = useCallback(() => {
+    if (audioCtxRef.current || !audioRef.current) return;
+    try {
+      const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AC();
+      const source = ctx.createMediaElementSource(audioRef.current);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 128;
+      source.connect(analyser);
+      analyser.connect(ctx.destination);
+      audioCtxRef.current = ctx;
+      analyserRef.current = analyser;
+      sourceRef.current = source;
+      dataArrayRef.current = new Uint8Array(analyser.frequencyBinCount);
+    } catch {
+      /* navigateur indisponible / déjà connecté */
+    }
+  }, []);
 
   useEffect(() => {
     const el = audioRef.current;
     if (!el) return;
     const onTime = () => setCurrentTime(el.currentTime);
     const onMeta = () => setDuration(el.duration || ossema.release.duration);
-    const onPlay = () => setIsPlaying(true);
+    const onPlay = () => {
+      setIsPlaying(true);
+      initAudioGraph();
+      audioCtxRef.current?.resume();
+    };
     const onPause = () => setIsPlaying(false);
     const onEnd = () => {
       setIsPlaying(false);
@@ -46,12 +77,10 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
       el.removeEventListener("pause", onPause);
       el.removeEventListener("ended", onEnd);
     };
-  }, []);
+  }, [initAudioGraph]);
 
   const play = useCallback(() => {
-    audioRef.current?.play().catch(() => {
-      /* user gesture required or no source — silent */
-    });
+    audioRef.current?.play().catch(() => {});
   }, []);
   const pause = useCallback(() => audioRef.current?.pause(), []);
   const toggle = useCallback(() => {
@@ -64,16 +93,24 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
     setCurrentTime(t);
   }, []);
 
+  const getFrequencyData = useCallback(() => {
+    const analyser = analyserRef.current;
+    const data = dataArrayRef.current;
+    if (!analyser || !data) return null;
+    analyser.getByteFrequencyData(data);
+    return data;
+  }, []);
+
   return (
     <Ctx.Provider
-      value={{ audioRef, isPlaying, currentTime, duration, toggle, play, pause, seek, hasSource }}
+      value={{ audioRef, isPlaying, currentTime, duration, toggle, play, pause, seek, hasSource, getFrequencyData }}
     >
-      {/* Hidden global audio element */}
       <audio
         ref={audioRef}
         src={ossema.release.audioUrl || undefined}
         preload="metadata"
         playsInline
+        crossOrigin="anonymous"
       />
       {children}
     </Ctx.Provider>
