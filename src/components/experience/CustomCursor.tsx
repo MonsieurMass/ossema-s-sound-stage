@@ -32,9 +32,10 @@ const CustomCursor = () => {
     const animate = () => {
       ring.current.x += (target.current.x - ring.current.x) * 0.16;
       ring.current.y += (target.current.y - ring.current.y) * 0.16;
+      const scale = textMode ? 1 : pressed ? 0.86 : hovered ? 1.02 : 1;
 
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0) translate(-50%, -50%)`;
+        ringRef.current.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0) translate(-50%, -50%) scale(${scale})`;
       }
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${target.current.x}px, ${target.current.y}px, 0) translate(-50%, -50%)`;
@@ -62,15 +63,14 @@ const CustomCursor = () => {
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
     };
-  }, [enabled]);
+  }, [enabled, hovered, pressed, textMode]);
 
   const ringClassName = useMemo(() => {
     const classes = ["custom-cursor-ring"];
     if (hovered) classes.push("is-hover");
-    if (pressed) classes.push("is-pressed");
     if (textMode) classes.push("is-text");
     return classes.join(" ");
-  }, [hovered, pressed, textMode]);
+  }, [hovered, textMode]);
 
   if (!enabled) return null;
 
