@@ -16,6 +16,9 @@ export const ossema = {
     portrait,
     videoStill,
     youtubeId: "", // placeholder — paste real ID later
+    audioUrl: "", // placeholder — paste real mp3 URL (Lovable Cloud Storage) later
+    presaveUrl: "#", // placeholder — paste Linkfire / Feature.fm pre-save link
+    releaseDate: "Disponible maintenant", // ou "Sortie le 14.06"
   },
   lyrics: [
     { time: 0,   text: "J'ai troqué mes rêves contre une montre en argent" },

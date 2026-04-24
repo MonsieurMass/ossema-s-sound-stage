@@ -1,47 +1,54 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const emailSchema = z
-  .string()
-  .trim()
-  .email({ message: "Adresse email invalide" })
-  .max(254, { message: "Email trop long" });
+const formSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .email({ message: "Adresse email invalide" })
+    .max(254, { message: "Email trop long" }),
+  consent: z.literal(true, {
+    errorMap: () => ({ message: "Vous devez accepter pour recevoir nos emails" }),
+  }),
+});
 
 const FanList = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = emailSchema.safeParse(email);
+    const parsed = formSchema.safeParse({ email, consent });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
     }
+
     setLoading(true);
-    const { error } = await supabase
-      .from("fan_subscribers")
-      .insert({
-        email: parsed.data.toLowerCase(),
-        artist: "ossema",
-        source: "landing",
-      });
+    const cleanEmail = parsed.data.email.toLowerCase();
+    const { error } = await supabase.from("fan_subscribers").insert({
+      email: cleanEmail,
+      artist: "ossema",
+      source: "landing",
+      consent_given: true,
+      consent_at: new Date().toISOString(),
+    });
     setLoading(false);
 
-    if (error) {
-      if (error.code === "23505") {
-        toast.success("Vous êtes déjà dans le cercle.");
-        setDone(true);
-        return;
-      }
+    if (error && error.code !== "23505") {
+      // 23505 = unique violation = already subscribed (treat as success)
       toast.error("Une erreur est survenue. Réessayez.");
       return;
     }
-    setDone(true);
-    toast.success("Bienvenue dans le cercle.");
+
+    // Persist email for the thank-you page (non-sensitive: just for display)
+    sessionStorage.setItem("ossema:subscribed", cleanEmail);
+    navigate("/merci");
   };
 
   return (
@@ -56,14 +63,8 @@ const FanList = () => {
           confidentielles et éditions limitées. Aucun spam, jamais.
         </p>
 
-        {done ? (
-          <div className="silver-border py-8 px-6 inline-block">
-            <p className="font-serif-display italic text-2xl">
-              Bienvenue. Vous êtes du cercle.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 md:gap-4 max-w-xl mx-auto">
+        <form onSubmit={handleSubmit} className="space-y-6 max-w-xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
             <input
               type="email"
               required
@@ -80,11 +81,35 @@ const FanList = () => {
             >
               {loading ? "Envoi…" : "S'inscrire"}
             </button>
-          </form>
-        )}
+          </div>
+
+          {/* RGPD consent */}
+          <label className="flex items-start gap-3 text-left cursor-pointer group">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+              className="mt-1 size-4 shrink-0 accent-ink cursor-pointer"
+              aria-describedby="consent-text"
+            />
+            <span id="consent-text" className="text-xs text-muted-foreground leading-relaxed">
+              J'accepte que {`${ossemaLabel}`} traite mon adresse email pour
+              m'envoyer des actualités sur Ossema (sorties, dates de tournée,
+              éditions limitées). Je peux me désinscrire à tout moment via le
+              lien présent dans chaque email. Voir notre{" "}
+              <a href="#" className="underline hover:text-ink transition-colors">
+                politique de confidentialité
+              </a>
+              .
+            </span>
+          </label>
+        </form>
       </div>
     </section>
   );
 };
+
+const ossemaLabel = "Kymia Music";
 
 export default FanList;

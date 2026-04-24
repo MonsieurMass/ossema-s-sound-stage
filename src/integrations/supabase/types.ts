@@ -17,6 +17,8 @@ export type Database = {
       fan_subscribers: {
         Row: {
           artist: string
+          consent_at: string | null
+          consent_given: boolean
           created_at: string
           email: string
           id: string
@@ -24,6 +26,8 @@ export type Database = {
         }
         Insert: {
           artist?: string
+          consent_at?: string | null
+          consent_given?: boolean
           created_at?: string
           email: string
           id?: string
@@ -31,6 +35,8 @@ export type Database = {
         }
         Update: {
           artist?: string
+          consent_at?: string | null
+          consent_given?: boolean
           created_at?: string
           email?: string
           id?: string
