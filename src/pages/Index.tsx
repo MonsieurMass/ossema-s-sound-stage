@@ -9,39 +9,36 @@ import PreSave from "@/components/ossema/PreSave";
 import Streaming from "@/components/ossema/Streaming";
 import FanList from "@/components/ossema/FanList";
 import Footer from "@/components/ossema/Footer";
+import PageSeo from "@/components/seo/PageSeo";
 import { ossema } from "@/data/ossema";
-import { useEffect } from "react";
 import { useAudio } from "@/audio/AudioProvider";
 
 const Index = () => {
   const { currentTime } = useAudio();
-
-  useEffect(() => {
-    document.title = `${ossema.artist} — ${ossema.release.title} | ${ossema.label}`;
-    const desc = `Nouveau single d'${ossema.artist} : ${ossema.release.title}. Écoute, paroles synchronisées et clip officiel. Rejoignez le cercle.`;
-    let m = document.querySelector('meta[name="description"]');
-    if (!m) {
-      m = document.createElement("meta");
-      m.setAttribute("name", "description");
-      document.head.appendChild(m);
-    }
-    m.setAttribute("content", desc);
-  }, []);
+  const description = `${ossema.artist} presente ${ossema.release.title}, porte d'entree dans ${ossema.release.album}: player, paroles synchronisees, clip officiel et fan list.`;
 
   return (
-    <main className="min-h-screen bg-vellum text-ink">
-      <Nav />
-      <Hero />
-      <Player />
-      <Lyrics currentTime={currentTime} />
-      <Artist />
-      <VideoSection />
-      <PreSave />
-      <Streaming />
-      <FanList />
-      <Footer />
-      <MiniPlayer />
-    </main>
+    <>
+      <PageSeo
+        title={`${ossema.artist} | ${ossema.release.title} | ${ossema.label}`}
+        description={description}
+        image={ossema.site.ogImage}
+        url={ossema.site.url || undefined}
+      />
+      <main className="min-h-screen bg-vellum text-ink">
+        <Nav />
+        <Hero />
+        <Player />
+        <Lyrics currentTime={currentTime} />
+        <Artist />
+        <VideoSection />
+        <PreSave />
+        <Streaming />
+        <FanList />
+        <Footer />
+        <MiniPlayer />
+      </main>
+    </>
   );
 };
 
