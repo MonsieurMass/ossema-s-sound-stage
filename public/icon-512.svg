@@ -1,0 +1,7 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="96" fill="#08080A"/>
+  <circle cx="256" cy="132" r="148" fill="#BC2121" fill-opacity="0.3"/>
+  <text x="76" y="226" fill="#FCFCF9" font-family="Georgia, serif" font-size="54" letter-spacing="10">KYMIA MUSIC</text>
+  <text x="72" y="350" fill="#FCFCF9" font-family="Georgia, serif" font-size="156" font-style="italic">OSSEMA</text>
+  <text x="76" y="410" fill="#D7D8DE" font-family="Arial, sans-serif" font-size="28" letter-spacing="8">LA NUIT</text>
+</svg>
