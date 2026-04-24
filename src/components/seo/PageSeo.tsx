@@ -5,7 +5,7 @@ type PageSeoProps = {
   description: string;
   image?: string;
   url?: string;
-  type?: "website" | "article";
+  type?: string;
   noIndex?: boolean;
 };
 
