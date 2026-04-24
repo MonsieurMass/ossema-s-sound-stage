@@ -1,6 +1,7 @@
 import Nav from "@/components/ossema/Nav";
 import Hero from "@/components/ossema/Hero";
 import Player from "@/components/ossema/Player";
+import MiniPlayer from "@/components/ossema/MiniPlayer";
 import Lyrics from "@/components/ossema/Lyrics";
 import VideoSection from "@/components/ossema/VideoSection";
 import PreSave from "@/components/ossema/PreSave";
