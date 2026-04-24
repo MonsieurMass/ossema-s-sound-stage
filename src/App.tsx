@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AudioProvider } from "@/audio/AudioProvider";
 import Index from "./pages/Index.tsx";
 import Merci from "./pages/Merci.tsx";
+import Confidentialite from "./pages/Confidentialite.tsx";
+import MentionsLegales from "./pages/MentionsLegales.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -20,7 +22,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/merci" element={<Merci />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/confidentialite" element={<Confidentialite />} />
+            <Route path="/mentions-legales" element={<MentionsLegales />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AudioProvider>
