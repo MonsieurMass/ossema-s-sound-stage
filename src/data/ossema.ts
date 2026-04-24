@@ -18,7 +18,8 @@ export const ossema = {
     youtubeId: "", // placeholder — paste real ID later
     audioUrl: "", // placeholder — paste real mp3 URL (Lovable Cloud Storage) later
     presaveUrl: "#", // placeholder — paste Linkfire / Feature.fm pre-save link
-    releaseDate: "Disponible maintenant", // ou "Sortie le 14.06"
+    releaseDate: "Sortie le 8 mai 2026",
+    releaseDateISO: "2026-05-08",
   },
   lyrics: [
     // Couplet 1
