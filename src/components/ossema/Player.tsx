@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { ossema, formatTime } from "@/data/ossema";
 import { Play, Pause, Rewind, FastForward, Volume2 } from "lucide-react";
 import { useAudio } from "@/audio/AudioProvider";
+import AudioVisualizer from "./AudioVisualizer";
 
 const Player = () => {
   const { isPlaying, currentTime, duration, toggle, seek, hasSource } = useAudio();
