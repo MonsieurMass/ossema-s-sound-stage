@@ -6,6 +6,25 @@ export type LyricLine = { time: number; text: string };
 export type PlatformLink = { name: string; url: string; code: string };
 export type SocialLink = { name: string; url: string };
 export type Credit = { label: string; value: string };
+export type TimelineEntry = {
+  date: string;
+  title: string;
+  description: string;
+  type: "release" | "event" | "upcoming";
+};
+export type StudioPhoto = { image: string; caption: string; meta: string };
+export type MerchSize = { label: string; available: boolean };
+export type MerchProduct = {
+  slug: string;
+  name: string;
+  price: string;
+  edition: string;
+  description: string;
+  image: string;
+  available: boolean;
+  dropDateTime?: string;
+  sizes: MerchSize[];
+};
 
 export const ossema = {
   artist: "OSSEMA",
@@ -59,6 +78,93 @@ export const ossema = {
     { label: "Mix / Master", value: "Studio Onyx" },
     { label: "Label", value: "Kymia Music" },
   ] as Credit[],
+  timeline: [
+    {
+      date: "2024",
+      title: "Soleil Triste",
+      description: "Premier projet publie. Le moment ou la documentation musicale commence vraiment.",
+      type: "release",
+    },
+    {
+      date: "2025",
+      title: "MWSA — Man Who Saw Angels",
+      description: "L'EP en cours. Acronyme fondateur de l'identite OSSEMA, entre vision mystique et rage urbaine.",
+      type: "event",
+    },
+    {
+      date: "8 Mai 2026",
+      title: "La Nuit",
+      description: "Premier single de Noir Vif, pense comme un portail: clip, parole, fan list et objets de campagne.",
+      type: "release",
+    },
+    {
+      date: "A venir",
+      title: "Noir Vif",
+      description: "L'album complet. Le point de convergence de la direction sonore, visuelle et narrative d'OSSEMA.",
+      type: "upcoming",
+    },
+  ] as TimelineEntry[],
+  studioPhotos: [
+    { image: portrait, caption: "Prise de voix a 3h17, les lumieres coupees sauf le rouge.", meta: "Paris · Nuit 01" },
+    { image: videoStill, caption: "Storyboards, reperages et intentions de cadre pour Kymia Films.", meta: "Clip · Atelier" },
+    { image: cover, caption: "La cover comme boussole: vellum, noir, blessure et froideur noble.", meta: "Artwork · Noir Vif" },
+    { image: portrait, caption: "Le regard doit rester frontal, jamais decoratif. Tout part de la posture.", meta: "Portrait · Session" },
+  ] as StudioPhoto[],
+  products: [
+    {
+      slug: "hoodie-noir-vif-001",
+      name: "Hoodie Noir Vif",
+      price: "95 €",
+      edition: "001 / 47",
+      description: "Piece lourde, coupe droite, noir charbon, marquage bordeaux ton-sur-ton. Pensee comme extension textile du single.",
+      image: portrait,
+      available: true,
+      dropDateTime: "2026-05-08T18:00:00+02:00",
+      sizes: [
+        { label: "XS", available: false },
+        { label: "S", available: true },
+        { label: "M", available: true },
+        { label: "L", available: true },
+        { label: "XL", available: false },
+      ],
+    },
+    {
+      slug: "tee-la-nuit-002",
+      name: "Tee La Nuit",
+      price: "48 €",
+      edition: "002 / 90",
+      description: "T-shirt noir dense, impression frontale minimale, dos typographique inspire des credits de fin et des affiches de cinema noir.",
+      image: cover,
+      available: false,
+      sizes: [
+        { label: "XS", available: false },
+        { label: "S", available: false },
+        { label: "M", available: false },
+        { label: "L", available: false },
+        { label: "XL", available: false },
+      ],
+    },
+  ] as MerchProduct[],
+  merci: {
+    genesis: [
+      "La Nuit est nee d'un besoin de donner une forme digne a ce qui d'habitude reste enfoui: les visions, la foi fendue, la rue qui appelle et le silence apres les coups.",
+      "Le morceau a ete construit comme un tunnel. Peu d'air, peu de lumiere, mais une avancee nette. Chaque phrase devait porter du poids.",
+      "La landing, le clip et les objets ne servent qu'a une chose: amplifier cette premiere entree dans Noir Vif sans en trahir la gravite.",
+    ],
+    productionNotes: [
+      "BPM: 142 — respiration lente sur batterie coupee nette.",
+      "Texture voulue: chaud sur la voix, froid dans l'espace, impression d'etre seul au milieu d'une ville encore allumee.",
+      "Arrangement pense pour le casque et les phares, pas pour le bruit de fond.",
+    ],
+    exclusiveEvent: "Listening session privee Kymia Music — Paris — invitations communiquees en priorite a la fan list.",
+    shareMessage:
+      "Je viens d'entrer dans l'univers de La Nuit d'OSSEMA. Single, paroles, clip et fan access sur:",
+  },
+  altVersions: [
+    { label: "Master", url: "" },
+    { label: "Instrumental", url: "" },
+    { label: "Acapella", url: "" },
+  ],
   lyrics: [
     { time: 0, text: "Au scalpel ils ont decortique chacun d'mes reves de gloire" },
     { time: 8, text: "Mes cicatrices sous du Versace en soie" },
