@@ -51,6 +51,10 @@
     --silver-foil: 0 0% 64%;
     --whisper: 0 0% 60%;
 
+    /* Signature accent — rouge encre, profond et chaud */
+    --signature: 0 72% 38%;
+    --signature-glow: 0 80% 50%;
+
     /* Silver foil gradient (for borders/accents) */
     --gradient-silver: linear-gradient(135deg,
       hsl(220 13% 82%) 0%,
