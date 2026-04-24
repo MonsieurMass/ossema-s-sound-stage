@@ -44,16 +44,21 @@
 
     --radius: 0;
 
-    /* Editorial extensions */
+    /* Editorial extensions — palette alignée à la cover "La Nuit" */
     --vellum: 48 33% 98%;
     --ink: 0 0% 4%;
     --silver: 220 13% 82%;
     --silver-foil: 0 0% 64%;
     --whisper: 0 0% 60%;
 
-    /* Signature accent — rouge encre, profond et chaud */
-    --signature: 0 72% 38%;
-    --signature-glow: 0 80% 50%;
+    /* Bleu nuit — couleur de l'univers nocturne */
+    --midnight: 220 45% 12%;
+    --midnight-deep: 222 50% 7%;
+    --midnight-glow: 215 55% 28%;
+
+    /* Signature accent — rouge sang, profond et chaud */
+    --signature: 0 75% 42%;
+    --signature-glow: 0 82% 55%;
 
     /* Silver foil gradient (for borders/accents) */
     --gradient-silver: linear-gradient(135deg,
