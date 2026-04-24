@@ -97,7 +97,7 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
     const analyser = analyserRef.current;
     const data = dataArrayRef.current;
     if (!analyser || !data) return null;
-    analyser.getByteFrequencyData(data);
+    analyser.getByteFrequencyData(data as Uint8Array<ArrayBuffer>);
     return data;
   }, []);
 
