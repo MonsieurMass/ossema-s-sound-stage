@@ -29,6 +29,7 @@ const Nav = () => {
         <div className="hidden md:flex space-x-8 caption text-ink">
           <a href="#sons" className="hover:text-signature transition-colors">Sons</a>
           <a href="#paroles" className="hover:text-signature transition-colors">Paroles</a>
+          <a href="#artiste" className="hover:text-signature transition-colors">Artiste</a>
           <a href="#visuels" className="hover:text-signature transition-colors">Visuels</a>
           <a href="#cercle" className="hover:text-signature transition-colors">Cercle</a>
         </div>

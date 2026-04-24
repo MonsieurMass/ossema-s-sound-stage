@@ -30,6 +30,9 @@ export default {
         whisper: "hsl(var(--whisper))",
         signature: "hsl(var(--signature))",
         "signature-glow": "hsl(var(--signature-glow))",
+        midnight: "hsl(var(--midnight))",
+        "midnight-deep": "hsl(var(--midnight-deep))",
+        "midnight-glow": "hsl(var(--midnight-glow))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

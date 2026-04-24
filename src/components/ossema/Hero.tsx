@@ -1,6 +1,7 @@
 import { ossema } from "@/data/ossema";
 import { Play, Bookmark } from "lucide-react";
 import { useAudio } from "@/audio/AudioProvider";
+import Countdown from "./Countdown";
 
 const Hero = () => {
   const { play, hasSource } = useAudio();
@@ -63,10 +64,13 @@ const Hero = () => {
               Pré-save
             </a>
           </div>
-          <p className="caption opacity-40 mt-5">
-            <span className="inline-block size-1.5 bg-signature rounded-full mr-2 align-middle animate-pulse" />
-            {ossema.release.releaseDate}
-          </p>
+          <div className="mt-8">
+            <p className="caption opacity-50 mb-3">
+              <span className="inline-block size-1.5 bg-signature rounded-full mr-2 align-middle animate-pulse" />
+              {ossema.release.releaseDate}
+            </p>
+            <Countdown />
+          </div>
         </div>
 
         {/* Portrait */}

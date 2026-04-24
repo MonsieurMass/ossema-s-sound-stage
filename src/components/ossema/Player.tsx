@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { ossema, formatTime } from "@/data/ossema";
 import { Play, Pause, Rewind, FastForward, Volume2 } from "lucide-react";
 import { useAudio } from "@/audio/AudioProvider";
+import AudioVisualizer from "./AudioVisualizer";
 
 const Player = () => {
   const { isPlaying, currentTime, duration, toggle, seek, hasSource } = useAudio();
@@ -119,6 +120,11 @@ const Player = () => {
                     : "Audio bientôt en ligne"}
                 </span>
               </div>
+            </div>
+
+            {/* Visualizer */}
+            <div className="mt-1 opacity-90">
+              <AudioVisualizer height={48} />
             </div>
           </div>
         </div>
