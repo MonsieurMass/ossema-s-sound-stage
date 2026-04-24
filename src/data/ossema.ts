@@ -21,19 +21,53 @@ export const ossema = {
     releaseDate: "Disponible maintenant", // ou "Sortie le 14.06"
   },
   lyrics: [
-    { time: 0,   text: "J'ai troqué mes rêves contre une montre en argent" },
-    { time: 14,  text: "Le ciel est de plomb, le bitume est trop grand" },
-    { time: 28,  text: "On marche sur l'eau quand le fleuve est de sang" },
-    { time: 42,  text: "Noir vif est l'éclat de nos cœurs impatients" },
-    { time: 58,  text: "Paris dort sous une pluie de néon blanc" },
-    { time: 74,  text: "J'écris au stylo bille sur la paume du temps" },
-    { time: 90,  text: "Maman m'a dit fils, fais doux mais fais grand" },
-    { time: 106, text: "Le silence est l'arme des plus patients" },
-    { time: 124, text: "On vient de loin, on n'y retourne pas vraiment" },
-    { time: 140, text: "Kymia dans les veines, le sang devient diamant" },
-    { time: 158, text: "Les phares balaient mes doutes en passant" },
-    { time: 176, text: "Je laisse mes regrets au coin d'un boulevard absent" },
-    { time: 196, text: "Hiver en mai, c'est la saison qu'on invente" },
+    // Couplet 1
+    { time: 0,   text: "Au scalpel ils ont décortiqué chacun d'mes rêves de gloire" },
+    { time: 8,   text: "Mes cicatrices sous du Versace en soie" },
+    { time: 14,  text: "Mon cœur ne veut plus voir la couleur de mes sentiments" },
+    { time: 22,  text: "Dans l'théâtre de mes cauchemars" },
+    { time: 28,  text: "J'suis l'acteur d'un film triste que j'n'ai plus envie de revoir" },
+    { time: 36,  text: "Mais bébé remue tes fesses et danse" },
+    { time: 42,  text: "Quand bouge ton corps j'ressens la trique" },
+    { time: 48,  text: "L'envie d'louer Dieu comme le frère Patrice" },
+    { time: 54,  text: "J'pense à mon père devant un verre d'Henny" },
+    { time: 60,  text: "Nés dans l'paradis des damnés mais on m'dit que j'suis béni" },
+    { time: 68,  text: "Sortis du ventre déjà condamné" },
+    { time: 74,  text: "Faut qu'les billets pleuvent sur ma vie" },
+    { time: 80,  text: "Un parasite d'base sympathique, dévisagé par Mélanie" },
+    { time: 88,  text: "Donc on s'réfugie auprès la rue, elle nous choisit pour écrire ses crimes" },
+    { time: 96,  text: "On dessine nos vies dans l'obscurité" },
+    { time: 102, text: "On trouvera pas la lumière dans c'monde déjà un peu trop fissuré" },
+    { time: 110, text: "Où la foi s'enterre à nos côtés" },
+
+    // Refrain
+    { time: 118, text: "Dans un monde fissuré j'avance sans lumière" },
+    { time: 124, text: "Béni maudit j'sais plus trop c'que j'suis censé faire" },
+    { time: 130, text: "La nuit me saigne, la nuit m'appelle" },
+    { time: 136, text: "La nuit m'enseigne comment mettre l'doigt sur l'revolver" },
+
+    // Pont — la rue
+    { time: 148, text: "Et la rue m'appelle, me dit que j'dois tomber pour elle" },
+    { time: 156, text: "Elle veut m'faire croire qu'elle sera une pute fidèle" },
+    { time: 164, text: "Mais pas sûr qu'elle se mouille quand mon sang coulera sous l'ciel" },
+    { time: 172, text: "Elle m'donne les chaînes pour pouvoir m'ken" },
+
+    // Couplet 2
+    { time: 180, text: "J'ai vu mes anges prier l'argent comme une idole" },
+    { time: 188, text: "J'entends ma mère pleurer, comprenez que j'rap la rage qui me dévore" },
+    { time: 196, text: "J'ai accepté qu'la vie n'm'aime pas quand j'ai vu mon père sur le sol" },
+    { time: 204, text: "Non papa n'reviendra pas, il est parti comme lil bro Yas" },
+    { time: 212, text: "Il n'me reste qu'des images, des souvenirs" },
+    { time: 218, text: "Donc Marie stp prie moi" },
+    { time: 224, text: "J'ai mis mes mano dans la merde, mon majeur en l'air au ciel" },
+    { time: 232, text: "Car mes prières sont en sourdine" },
+    { time: 238, text: "Au paradis les murs n'ont sûrement pas d'oreilles" },
+
+    // Refrain final
+    { time: 248, text: "Dans un monde fissuré j'avance sans lumière" },
+    { time: 254, text: "Béni maudit j'sais plus trop c'que j'suis censé faire" },
+    { time: 260, text: "La nuit me saigne, la nuit m'appelle" },
+    { time: 266, text: "La nuit m'enseigne comment mettre l'doigt sur l'revolver" },
   ] as LyricLine[],
   streaming: [
     { name: "Spotify",     url: "#", code: "01" },
