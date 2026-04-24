@@ -11,7 +11,7 @@
   </defs>
   <rect width="1200" height="630" fill="url(#night)"/>
   <rect width="1200" height="630" fill="url(#blood)"/>
-  <rect x="48" y="48" width="1104" height="534" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <rect x="48" y="48" width="1104" height="534" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="2"/>
   <text x="96" y="132" fill="#D2D7E2" font-family="Georgia, serif" font-size="28" letter-spacing="8">KYMIA MUSIC</text>
   <text x="96" y="330" fill="#F8F7F1" font-family="Georgia, serif" font-size="148" font-style="italic">OSSEMA</text>
   <text x="96" y="422" fill="#F8F7F1" font-family="Georgia, serif" font-size="62" font-style="italic">La Nuit</text>
