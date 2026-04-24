@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
+import { ossema } from "@/data/ossema";
 import { toast } from "sonner";
 
 const formSchema = z.object({
@@ -19,7 +20,13 @@ const FanList = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleSuccess = (cleanEmail: string) => {
+    sessionStorage.setItem(ossema.newsletter.storageKey, cleanEmail);
+    navigate("/merci");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,41 +36,60 @@ const FanList = () => {
       return;
     }
 
-    setLoading(true);
     const cleanEmail = parsed.data.email.toLowerCase();
-    const { error } = await supabase.from("fan_subscribers").insert({
+
+    if (honeypot.trim()) {
+      handleSuccess(cleanEmail);
+      return;
+    }
+
+    if (!isSupabaseConfigured || !supabase) {
+      toast.error("Supabase n'est pas encore configure. Branche les variables d'environnement avant la mise en ligne.");
+      return;
+    }
+
+    setLoading(true);
+    const { error } = await supabase.from(ossema.newsletter.table).insert({
       email: cleanEmail,
-      artist: "ossema",
-      source: "landing",
+      artist: ossema.newsletter.artistSlug,
+      source: ossema.newsletter.source,
       consent_given: true,
       consent_at: new Date().toISOString(),
     });
     setLoading(false);
 
     if (error && error.code !== "23505") {
-      // 23505 = unique violation = already subscribed (treat as success)
-      toast.error("Une erreur est survenue. Réessayez.");
+      toast.error("Une erreur est survenue. Reessayez.");
       return;
     }
 
-    // Persist email for the thank-you page (non-sensitive: just for display)
-    sessionStorage.setItem("ossema:subscribed", cleanEmail);
-    navigate("/merci");
+    handleSuccess(cleanEmail);
   };
 
   return (
     <section id="cercle" className="py-32 md:py-48 px-6 md:px-10">
       <div className="max-w-2xl mx-auto text-center">
-        <p className="caption opacity-50 mb-6">Liste privée</p>
+        <p className="caption opacity-50 mb-6">Liste privee</p>
         <h2 className="font-serif-display text-5xl md:text-6xl italic tracking-tighter mb-6">
           Rejoindre le cercle
         </h2>
         <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-md mx-auto mb-12">
-          Sorties en avant-première, demos non publiées, dates de tournée
-          confidentielles et éditions limitées. Aucun spam, jamais.
+          Sorties en avant-premiere, demos non publiees, dates de tournee confidentielles et editions limitees. Aucun spam, jamais.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6 max-w-xl mx-auto">
+          <div className="hidden" aria-hidden="true">
+            <label htmlFor="company">Entreprise</label>
+            <input
+              id="company"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
+
           <div className="flex flex-col md:flex-row gap-3 md:gap-4">
             <input
               type="email"
@@ -71,19 +97,18 @@ const FanList = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               maxLength={254}
-              placeholder="VOTRE ADRESSE EMAIL"
-              className="flex-1 bg-transparent border-b border-border py-4 px-1 text-xs tracking-[0.25em] uppercase placeholder:text-muted-foreground focus:outline-none focus:border-ink transition-colors"
+              placeholder="votre adresse email"
+              className="flex-1 bg-transparent border-b border-border py-4 px-1 text-sm placeholder:text-muted-foreground focus:outline-none focus:border-ink transition-colors"
             />
             <button
               type="submit"
               disabled={loading}
               className="silver-border bg-ink text-vellum px-10 py-4 caption font-bold hover:bg-foreground/90 transition-colors disabled:opacity-50"
             >
-              {loading ? "Envoi…" : "S'inscrire"}
+              {loading ? "Envoi..." : "S'inscrire"}
             </button>
           </div>
 
-          {/* RGPD consent */}
           <label className="flex items-start gap-3 text-left cursor-pointer group">
             <input
               type="checkbox"
@@ -94,13 +119,11 @@ const FanList = () => {
               aria-describedby="consent-text"
             />
             <span id="consent-text" className="text-xs text-muted-foreground leading-relaxed">
-              J'accepte que {`${ossemaLabel}`} traite mon adresse email pour
-              m'envoyer des actualités sur Ossema (sorties, dates de tournée,
-              éditions limitées). Je peux me désinscrire à tout moment via le
-              lien présent dans chaque email. Voir notre{" "}
-              <a href="#" className="underline hover:text-ink transition-colors">
-                politique de confidentialité
-              </a>
+              J'accepte que {ossema.label} traite mon adresse email pour m'envoyer des actualites sur {ossema.artist}.
+              Je peux me desinscrire a tout moment via le lien present dans chaque email. Voir la{" "}
+              <Link to={ossema.newsletter.privacyPath} className="underline hover:text-ink transition-colors">
+                politique de confidentialite
+              </Link>
               .
             </span>
           </label>
@@ -109,7 +132,5 @@ const FanList = () => {
     </section>
   );
 };
-
-const ossemaLabel = "Kymia Music";
 
 export default FanList;
