@@ -1,5 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getReleaseTimestamp } from "@/data/ossema";
+
+const FlipDigit = ({ value, animate = true, compact = false }: { value: number; animate?: boolean; compact?: boolean }) => {
+  const [display, setDisplay] = useState(value.toString().padStart(2, "0"));
+  const [previous, setPrevious] = useState(display);
+  const [flipping, setFlipping] = useState(false);
+  const timeoutRef = useRef<number>();
+
+  useEffect(() => {
+    const next = value.toString().padStart(2, "0");
+    if (next === display) return;
+    if (!animate) {
+      setDisplay(next);
+      return;
+    }
+    setPrevious(display);
+    setDisplay(next);
+    setFlipping(true);
+    timeoutRef.current = window.setTimeout(() => setFlipping(false), compact ? 200 : 250);
+    return () => {
+      if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+    };
+  }, [animate, compact, display, value]);
+
+  return (
+    <div className="flip-shell silver-border bg-vellum/60 backdrop-blur-sm px-4 py-3 min-w-[76px] text-center">
+      <div className={`flip-card relative h-10 md:h-12 ${flipping ? "is-flipping" : ""}`}>
+        <span className="flip-top font-serif-display text-3xl md:text-4xl leading-none tabular-nums">{display}</span>
+        {animate ? (
+          <>
+            <span className="flip-old font-serif-display text-3xl md:text-4xl leading-none tabular-nums">{previous}</span>
+            <span className="flip-new font-serif-display text-3xl md:text-4xl leading-none tabular-nums">{display}</span>
+          </>
+        ) : null}
+      </div>
+    </div>
+  );
+};
 
 const Countdown = () => {
   const [now, setNow] = useState(() => Date.now());
@@ -24,27 +61,24 @@ const Countdown = () => {
     );
   }
 
-  const cells = [
-    { value: days, label: "Jours" },
-    { value: hours, label: "Heures" },
-    { value: minutes, label: "Min" },
-    { value: seconds, label: "Sec" },
-  ];
-
   return (
-    <div className="inline-flex items-stretch gap-2">
-      {cells.map(({ value, label }, index) => (
-        <div
-          key={label}
-          className="silver-border bg-vellum/60 backdrop-blur-sm px-3 py-2 min-w-[58px] text-center"
-        >
-          <div className="font-serif-display text-2xl md:text-3xl leading-none tabular-nums">
-            {value.toString().padStart(2, "0")}
-          </div>
-          <div className="caption opacity-50 mt-1">{label}</div>
-          {index === 0 && <span className="sr-only">avant la sortie</span>}
-        </div>
-      ))}
+    <div className="inline-flex flex-wrap items-stretch gap-2 md:gap-3">
+      <div className="silver-border bg-vellum/60 backdrop-blur-sm px-4 py-3 min-w-[90px] text-center">
+        <div className="font-serif-display text-3xl md:text-5xl leading-none tabular-nums">{days.toString().padStart(2, "0")}</div>
+        <div className="caption opacity-50 mt-2">Jours</div>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <FlipDigit value={hours} animate={false} />
+        <span className="caption opacity-50">Heures</span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <FlipDigit value={minutes} />
+        <span className="caption opacity-50">Min</span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <FlipDigit value={seconds} compact />
+        <span className="caption opacity-50">Sec</span>
+      </div>
     </div>
   );
 };
